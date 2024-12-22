@@ -74,6 +74,122 @@
             background-color: #333;
             color: #fff;
         }
+        #processDetails {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            border-left: 6px solid #ff00de;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .mermaid .node {
+            cursor: pointer;
+        }
+
+        .mermaid .node.expanded rect {
+            stroke-width: 3px;
+            stroke: #ff00de;
+        }
+
+        .click-hint {
+            color: #ff00de;
+            text-align: center;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .mermaid .node rect {
+            transition: all 0.3s ease;
+        }
+
+        .mermaid .node:hover rect {
+            filter: brightness(1.1);
+            transform: scale(1.02);
+        }
+
+        .bottleneck-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+
+        .subprocess-bottlenecks {
+            margin-left: 20px;
+            padding: 10px;
+            border-left: 3px solid #ff00de;
+            margin-bottom: 15px;
+        }
+
+        .subprocess-bottlenecks h4 {
+            color: #ff00de;
+            margin: 5px 0;
+        }
+
+        .bottleneck-section ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .bottleneck-section li {
+            margin: 5px 0;
+            color: #ff9999;
+        }
+
+        .optimization-summary {
+            background-color: rgba(255, 0, 222, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .optimization-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+
+        .tool-recommendation {
+            background-color: rgba(255, 0, 222, 0.05);
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #ff00de;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .subprocess-optimization {
+            margin: 15px 0;
+            padding: 10px;
+            border-left: 2px solid #ff00de;
+        }
+
+        .impact {
+            color: #ff00de;
+            font-style: italic;
+        }
+
+        .optimization-details ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .optimization-details li {
+            margin: 5px 0;
+            color: #ddd;
+        }
     </style>
 </head>
 
