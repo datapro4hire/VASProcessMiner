@@ -71,15 +71,13 @@
 </head>
 
 <body>
-    <input type="file" id="fileInput" multiple>
-    <button id="uploadButton">Upload and Analyze</button>
     <div class="container">
         <h1 class="neonText">NX8020™ - Process Optimizer</h1>
         
         <div class="section">
             <h2>Upload CRM/ERP Log Files</h2>
             <input type="file" id="fileInput" multiple>
-            <button onclick="uploadFiles()">Upload and Analyze</button>
+            <button id="uploadButton">Upload and Analyze</button>
         </div>
         
         <div id="result"></div>
@@ -95,70 +93,6 @@
         <p>DataProStudio, Inc. &nbsp;| &nbsp; &copy; 2024</p>
     </div>
 
-    <script>
-        function uploadFiles() {
-            const fileInput = document.getElementById('fileInput');
-            const files = fileInput.files;
-            if (files.length === 0) {
-                alert('Please select one or more files to upload');
-                return;
-            }
-            
-            const formData = new FormData();
-            for (let i = 0; i < files.length; i++) {
-                formData.append('files', files[i]);
-            }
-            
-            document.getElementById('result').innerText = 'Uploading and analyzing files...';
-            
-            fetch('http://localhost:3000/upload-and-analyze', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('result').innerText = 'Analysis complete!';
-                visualizeProcess(data.processFlow);
-                showBottlenecks(data.bottlenecks);
-                showOptimization(data.optimization);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('result').innerText = 'Error uploading and analyzing files';
-            });
-        }
-
-        function visualizeProcess(processFlow) {
-            const flowchart = `
-                graph TD
-                ${processFlow.join('\n')}
-            `;
-            
-            const processFlowDiv = document.getElementById('processFlow');
-            processFlowDiv.innerHTML = '<h2>Process Flowchart</h2>';
-            
-            mermaid.render('processFlowChart', flowchart).then(({ svg }) => {
-                processFlowDiv.innerHTML += svg;
-            });
-        }
-
-        function showBottlenecks(bottlenecks) {
-            const bottlenecksDiv = document.getElementById('bottlenecks');
-            bottlenecksDiv.innerHTML = '<h2>Process Bottlenecks</h2>';
-            bottlenecksDiv.innerHTML += '<ul>' + 
-                bottlenecks.map(b => `<li>${b}</li>`).join('') + 
-                '</ul>';
-        }
-
-        function showOptimization(optimization) {
-            const optimizationDiv = document.getElementById('optimization');
-            optimizationDiv.innerHTML = '<h2>Optimized Integration</h2>';
-            optimizationDiv.innerHTML += `<p>${optimization}</p>`;
-        }
-
-        // Initialize Mermaid
-        mermaid.initialize({ startOnLoad: true });
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10.0.2/dist/mermaid.min.js"></script>
     <script src="script.js"></script>
 </body>
