@@ -23,7 +23,12 @@ app.get('/', (req, res) => {
 
 // Update the route to match what's in your frontend code
 app.post('/upload-and-analyze', upload.array('files'), (req, res) => {
+    console.log('Received request'); // Debug log
+    console.log('Files:', req.files); // Debug log
+
     if (req.files && req.files.length > 0) {
+        console.log('Processing files...'); // Debug log
+        
         // Mock response data for testing
         const mockResponse = {
             processFlow: [
@@ -38,8 +43,10 @@ app.post('/upload-and-analyze', upload.array('files'), (req, res) => {
             optimization: 'Suggested optimization: Implement parallel processing in Process 1'
         };
         
+        console.log('Sending response:', mockResponse); // Debug log
         res.json(mockResponse);
     } else {
+        console.log('No files received'); // Debug log
         res.status(400).send('No files uploaded');
     }
 });

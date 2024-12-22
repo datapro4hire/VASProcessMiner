@@ -1,6 +1,3 @@
-// Initialize Mermaid
-mermaid.initialize({ startOnLoad: true });
-
 document.addEventListener('DOMContentLoaded', () => {
     const fileInput = document.getElementById('fileInput');
     const uploadButton = document.getElementById('uploadButton');
@@ -13,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function uploadFiles() {
         const files = fileInput.files;
+        console.log('Files selected:', files.length); // Debug log
+
         if (files.length === 0) {
             alert('Please select one or more files to upload');
             return;
@@ -21,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData();
         for (let i = 0; i < files.length; i++) {
             formData.append('files', files[i]);
+            console.log('Appending file:', files[i].name); // Debug log
         }
 
         resultDiv.innerText = 'Uploading and analyzing files...';
@@ -29,23 +29,28 @@ document.addEventListener('DOMContentLoaded', () => {
         optimizationDiv.innerHTML = '';
 
         try {
+            console.log('Sending request to server...'); // Debug log
             const response = await fetch('http://localhost:3000/upload-and-analyze', {
                 method: 'POST',
                 body: formData
             });
+
+            console.log('Response status:', response.status); // Debug log
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const data = await response.json();
+            console.log('Received data:', data); // Debug log
+            
             resultDiv.innerText = 'Analysis complete!';
             visualizeProcess(data.processFlow);
             showBottlenecks(data.bottlenecks);
             showOptimization(data.optimization);
         } catch (error) {
             console.error('Error:', error);
-            resultDiv.innerText = 'Error uploading and analyzing files';
+            resultDiv.innerText = 'Error uploading and analyzing files: ' + error.message;
         }
     }
 
@@ -55,11 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
             ${processFlow.join('\n')}
         `;
 
-        processFlowDiv.innerHTML = '<h2>Process Flowchart</h2>';
-
-        mermaid.render('processFlowChart', flowchart).then(({ svg }) => {
-            processFlowDiv.innerHTML += svg;
-        });
+        processFlowDiv.innerHTML = '<h2>Process Flowchart</h2><div class="mermaid">' + flowchart + '</div>';
+        
+        // Force Mermaid to re-render
+        mermaid.init(undefined, '.mermaid');
     }
 
     function showBottlenecks(bottlenecks) {
